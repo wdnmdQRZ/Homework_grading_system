@@ -1,9 +1,0 @@
-# ninja log v6
-6	610	8045774476924624	Homework_grading_system_autogen/timestamp	6ad2aacc3c446230
-6	610	8045774476924624	Homework_grading_system_autogen/mocs_compilation.cpp	6ad2aacc3c446230
-6	610	8045774476924624	E:/Homework_grading_system/build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/Homework_grading_system_autogen/timestamp	6ad2aacc3c446230
-6	610	8045774476924624	E:/Homework_grading_system/build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/Homework_grading_system_autogen/mocs_compilation.cpp	6ad2aacc3c446230
-613	1843	8045774477645675	CMakeFiles/Homework_grading_system.dir/Homework_grading_system_autogen/mocs_compilation.cpp.obj	afac44597143114
-622	1878	8045774477735327	CMakeFiles/Homework_grading_system.dir/main.cpp.obj	6960e1e998100646
-630	1936	8045774477825277	CMakeFiles/Homework_grading_system.dir/mainwindow.cpp.obj	802133d1d6e09f7
-1936	2106	8045774490883092	Homework_grading_system.exe	386739d2361b324c
