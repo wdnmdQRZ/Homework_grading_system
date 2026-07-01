@@ -20,9 +20,9 @@ class Config:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt-dev-secret")
     JWT_ACCESS_TOKEN_EXPIRES = 60 * 60 * 24
 
-    # 数据库配置
+    # 数据库配置（SQLite，数据存在 server/data.db）
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        "mysql+pymysql://root:password@127.0.0.1:3306/homework_grader"
+        "sqlite:///" + os.path.join(BASE_DIR, "data.db")
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
