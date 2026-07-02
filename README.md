@@ -10,7 +10,9 @@ E:\Homework_grading_system\
 │   ├── CMakeLists.txt               # CMake 构建配置（依赖 Qt6::Core/Widgets/Network）
 │   ├── main.cpp                     # 程序入口
 │   ├── mainwindow.cpp / .h / .ui    # 主窗口
-│   ├── logindialog.cpp / .h / .ui   # 登录对话框
+│   ├── logindialog.cpp / .h / .ui   # 登录/注册对话框（QStackedWidget 容器）
+│   ├── loginpage.cpp / .h / .ui     # 登录页
+│   ├── registerpage.cpp / .h / .ui  # 注册页
 │   ├── studentpanel.cpp / .h / .ui  # 学生面板
 │   ├── teacherpanel.cpp / .h / .ui  # 教师面板
 │   ├── style.qss                    # QT 样式表
