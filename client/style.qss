@@ -1,10 +1,8 @@
-/* ==================== 登录窗口 ==================== */
-logindialog {
-    background-color: #FFFFFF;
-}
+/* ==================== 登录/注册页面通用样式 ==================== */
 
 /* 标题：大字加粗 */
-logindialog QLabel#labelTitle {
+loginpage QLabel#labelTitle,
+registerpage QLabel#labelTitle {
     font-size: 28px;
     font-weight: bold;
     color: #1E293B;
@@ -13,7 +11,8 @@ logindialog QLabel#labelTitle {
 }
 
 /* 副标题：灰色 */
-logindialog QLabel#labelPrompt {
+loginpage QLabel#labelPrompt,
+registerpage QLabel#labelPrompt {
     font-size: 14px;
     color: #94A3B8;
     qproperty-alignment: AlignCenter;
@@ -22,8 +21,11 @@ logindialog QLabel#labelPrompt {
 }
 
 /* "用户名"/"密码" 标签 */
-logindialog QLabel#labelUsername,
-logindialog QLabel#labelPassword {
+loginpage QLabel#labelUsername,
+loginpage QLabel#labelPassword,
+registerpage QLabel#labelUsername,
+registerpage QLabel#labelPassword,
+registerpage QLabel#labelConfirmPassword {
     font-size: 14px;
     color: #334155;
     font-weight: bold;
@@ -32,7 +34,8 @@ logindialog QLabel#labelPassword {
 }
 
 /* 输入框 */
-logindialog QLineEdit {
+loginpage QLineEdit,
+registerpage QLineEdit {
     padding: 10px 14px;
     border: 1.5px solid #E2E8F0;
     border-radius: 8px;
@@ -41,23 +44,26 @@ logindialog QLineEdit {
     color: #1E293B;
 }
 
-logindialog QLineEdit:focus {
+loginpage QLineEdit:focus,
+registerpage QLineEdit:focus {
     border-color: #3B82F6;
 }
 
-logindialog QLineEdit::placeholder {
+loginpage QLineEdit::placeholder,
+registerpage QLineEdit::placeholder {
     color: #B0BEC5;
 }
 
 /* 错误提示：红色居中文字 */
-logindialog QLabel#labelWarning {
+loginpage QLabel#labelWarning,
+registerpage QLabel#labelWarning {
     font-size: 14px;
     color: #EF4444;
     qproperty-alignment: AlignCenter;
 }
 
 /* 登录按钮：蓝色实心 */
-logindialog QPushButton#btnLogin {
+loginpage QPushButton#btnLogin {
     background-color: #3B82F6;
     color: #FFFFFF;
     border: none;
@@ -68,29 +74,46 @@ logindialog QPushButton#btnLogin {
     margin-top: 30px;
 }
 
-logindialog QPushButton#btnLogin:hover {
+loginpage QPushButton#btnLogin:hover {
     background-color: #2563EB;
 }
 
-logindialog QPushButton#btnLogin:pressed {
+loginpage QPushButton#btnLogin:pressed {
     background-color: #1D4ED8;
 }
 
-/* 注册按钮：白底蓝边 */
-logindialog QPushButton#btnRegister {
-    background-color: #FFFFFF;
-    color: #3B82F6;
-    border: 1.5px solid #3B82F6;
+/* 注册按钮：蓝色实心 */
+registerpage QPushButton#btnRegister {
+    background-color: #3B82F6;
+    color: #FFFFFF;
+    border: none;
     border-radius: 8px;
     padding: 12px;
     font-size: 16px;
     font-weight: bold;
+    margin-top: 20px;
 }
 
-logindialog QPushButton#btnRegister:hover {
-    background-color: #EFF6FF;
+registerpage QPushButton#btnRegister:hover {
+    background-color: #2563EB;
 }
 
-logindialog QPushButton#btnRegister:pressed {
-    background-color: #DBEAFE;
+registerpage QPushButton#btnRegister:pressed {
+    background-color: #1D4ED8;
+}
+
+/* 切换页面链接按钮 */
+loginpage QPushButton#btnToRegister,
+registerpage QPushButton#btnToLogin {
+    background-color: transparent;
+    color: #3B82F6;
+    border: none;
+    font-size: 14px;
+    padding: 8px;
+}
+
+loginpage QPushButton#btnToRegister:hover,
+registerpage QPushButton#btnToLogin:hover {
+    color: #2563EB;
+    text-decoration: underline;
 }

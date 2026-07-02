@@ -16,6 +16,8 @@ qt_add_executable(Homework_grading_system
     logindialog.h logindialog.cpp logindialog.ui
     studentpanel.h studentpanel.cpp studentpanel.ui
     teacherpanel.h teacherpanel.cpp teacherpanel.ui
+    loginpage.h loginpage.cpp loginpage.ui
+    registerpage.h registerpage.cpp registerpage.ui
 )
 
 qt_add_resources(Homework_grading_system "resources"

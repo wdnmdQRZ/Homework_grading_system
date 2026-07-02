@@ -1,23 +1,40 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
+#include "loginpage.h"
+#include "registerpage.h"
 #include "src/core/apiclient.h"
 #include <QApplication>
 #include <QStyle>
-#include <QMessageBox>
 
 logindialog::logindialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::logindialog)
     , m_apiClient(new ApiClient(this))
+    , m_loginPage(new loginpage)
+    , m_registerPage(new registerpage)
 {
     ui->setupUi(this);
     setWindowTitle("作业管理系统");
     setWindowIcon(QApplication::style()->standardIcon(QStyle::SP_ComputerIcon));
 
-    ui->labelWarning->setText("");
+    // 把两个页面添加到 QStackedWidget
+    ui->stackedWidget->addWidget(m_loginPage);    // Page 0
+    ui->stackedWidget->addWidget(m_registerPage); // Page 1
 
-    connect(ui->btnLogin, &QPushButton::clicked,
-            this, &logindialog::onLoginClicked);
+    // === 页面切换 ===
+    connect(m_loginPage, &loginpage::goToRegister, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(1);
+        m_registerPage->clearFields();
+    });
+
+    connect(m_registerPage, &registerpage::goToLogin, this, [this]() {
+        ui->stackedWidget->setCurrentIndex(0);
+        m_loginPage->clearFields();
+    });
+
+    // === 登录请求 ===
+    connect(m_loginPage, &loginpage::loginRequested,
+            this, &logindialog::onLoginRequested);
 
     connect(m_apiClient, &ApiClient::loginResult,
             this, [this](bool ok, const QJsonObject &data, const QString &message) {
@@ -28,8 +45,24 @@ logindialog::logindialog(QWidget *parent)
             m_role = user["role"].toString();
             accept();
         } else {
-            ui->labelWarning->setText(message);
-            ui->labelWarning->setVisible(true);
+            m_loginPage->showWarning(message);
+        }
+    });
+
+    // === 注册请求 ===
+    connect(m_registerPage, &registerpage::registerRequested,
+            this, &logindialog::onRegisterRequested);
+
+    connect(m_apiClient, &ApiClient::registerResult,
+            this, [this](bool ok, const QString &message) {
+        if (ok) {
+            // 注册成功：切回登录页，自动填入用户名
+            ui->stackedWidget->setCurrentIndex(0);
+            m_loginPage->clearFields();
+            m_loginPage->setUsername(m_registerPage->username());
+            m_loginPage->showWarning("注册成功，请登录");
+        } else {
+            m_registerPage->showWarning(message);
         }
     });
 }
@@ -43,18 +76,12 @@ QString logindialog::token() const    { return m_token; }
 QString logindialog::username() const { return m_username; }
 QString logindialog::role() const     { return m_role; }
 
-void logindialog::onLoginClicked()
+void logindialog::onLoginRequested(const QString &username, const QString &password)
 {
-    ui->labelWarning->setVisible(false);
-
-    QString username = ui->editUsername->text().trimmed();
-    QString password = ui->editPassword->text();
-
-    if (username.isEmpty() || password.isEmpty()) {
-        ui->labelWarning->setText("用户名和密码不能为空");
-        ui->labelWarning->setVisible(true);
-        return;
-    }
-
     m_apiClient->login(username, password);
+}
+
+void logindialog::onRegisterRequested(const QString &username, const QString &password)
+{
+    m_apiClient->registerUser(username, password);
 }

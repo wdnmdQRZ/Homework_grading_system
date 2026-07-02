@@ -17,46 +17,56 @@ ApiClient::ApiClient(QObject *parent)
 
 void ApiClient::login(const QString &username, const QString &password)
 {
-    // 1. 构造 JSON 请求体
     QJsonObject body;
     body["username"] = username;
     body["password"] = password;
 
-    // 2. 创建请求对象，设置 URL 和 Content-Type
     QNetworkRequest request(QUrl(BASE_URL + "/api/auth/login"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    // 3. 发出 POST 请求
-    //    - QJsonDocument(body).toJson() 把 QJsonObject 序列化成纯 JSON 字符串
-    //    - m_manager->post() 是异步的，立刻返回，不阻塞界面
+    m_pendingRequest = Login;
+    m_manager->post(request, QJsonDocument(body).toJson());
+}
+
+void ApiClient::registerUser(const QString &username, const QString &password)
+{
+    QJsonObject body;
+    body["username"] = username;
+    body["password"] = password;
+
+    QNetworkRequest request(QUrl(BASE_URL + "/api/auth/register"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    m_pendingRequest = Register;
     m_manager->post(request, QJsonDocument(body).toJson());
 }
 
 void ApiClient::onReplyFinished(QNetworkReply *reply)
 {
-    // 1. 先检查有没有网络层面的错误（连不上服务器、DNS 解析失败等）
     if (reply->error() != QNetworkReply::NoError) {
-        emit loginResult(false, QJsonObject(),
-                         "网络错误：" + reply->errorString());
-        reply->deleteLater();  // Qt 建议用 deleteLater 安全释放 reply
+        if (m_pendingRequest == Login)
+            emit loginResult(false, QJsonObject(), "网络错误：" + reply->errorString());
+        else if (m_pendingRequest == Register)
+            emit registerResult(false, "网络错误：" + reply->errorString());
+        m_pendingRequest = None;
+        reply->deleteLater();
         return;
     }
 
-    // 2. 读取服务器返回的全部数据
     QByteArray raw = reply->readAll();
-
-    // 3. 解析 JSON —— fromJson 把字节数组转成 QJsonDocument
     QJsonDocument doc = QJsonDocument::fromJson(raw);
     QJsonObject json = doc.object();
 
-    // 4. 取出后端统一返回格式的三个字段
-    int code = json["code"].toInt();          // 200 表示成功
+    int code = json["code"].toInt();
     QString message = json["message"].toString();
     QJsonObject data = json["data"].toObject();
 
-    // 5. 通过信号把结果发射出去
-    //    code == 200 → ok = true，否则 false
-    emit loginResult(code == 200, data, message);
+    if (m_pendingRequest == Login) {
+        emit loginResult(code == 200, data, message);
+    } else if (m_pendingRequest == Register) {
+        emit registerResult(code == 200, message);
+    }
 
+    m_pendingRequest = None;
     reply->deleteLater();
 }

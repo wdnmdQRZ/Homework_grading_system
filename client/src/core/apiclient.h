@@ -15,18 +15,27 @@ public:
     // 登录：向 POST /api/auth/login 发送 username + password
     void login(const QString &username, const QString &password);
 
+    // 注册：向 POST /api/auth/register 发送 username + password
+    void registerUser(const QString &username, const QString &password);
+
 signals:
-    // 登录结果信号，请求完成后自动发射
-    // ok = true 表示后端返回 code==200，data 包含 token/user 信息
+    // 登录结果信号
     void loginResult(bool ok, const QJsonObject &data, const QString &message);
+
+    // 注册结果信号
+    void registerResult(bool ok, const QString &message);
 
 private slots:
     // QNetworkAccessManager::finished 信号触发，统一处理所有网络回复
     void onReplyFinished(QNetworkReply *reply);
 
 private:
-    QNetworkAccessManager *m_manager; // HTTP 请求管理器，整个类共用一个
-    static const QString BASE_URL;    // 后端基础地址，改端口只需改一处
+    QNetworkAccessManager *m_manager;
+    static const QString BASE_URL;
+
+    // 追踪当前请求类型
+    enum RequestType { None, Login, Register };
+    RequestType m_pendingRequest = None;
 };
 
 #endif // APICLIENT_H

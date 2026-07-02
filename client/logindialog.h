@@ -9,6 +9,8 @@ class logindialog;
 }
 
 class ApiClient;
+class loginpage;
+class registerpage;
 
 class logindialog : public QDialog
 {
@@ -18,19 +20,20 @@ public:
     explicit logindialog(QWidget *parent = nullptr);
     ~logindialog();
 
-    // 获取登录结果
     QString token() const;
     QString username() const;
     QString role() const;
 
 private slots:
-    void onLoginClicked();
+    void onLoginRequested(const QString &username, const QString &password);
+    void onRegisterRequested(const QString &username, const QString &password);
 
 private:
     Ui::logindialog *ui;
     ApiClient *m_apiClient;
+    loginpage *m_loginPage;
+    registerpage *m_registerPage;
 
-    // 登录成功时保存的数据
     QString m_token;
     QString m_username;
     QString m_role;
