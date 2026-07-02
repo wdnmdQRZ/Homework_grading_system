@@ -7,7 +7,7 @@ from common.response import success, fail
 auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/api/auth/register", methods=["POST"])
 def register():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     username = data.get("username", "").strip()
     password = data.get("password", "")
 
@@ -35,7 +35,7 @@ def register():
 
 @auth_bp.route("/api/auth/login", methods=["POST"])
 def login():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     username = data.get("username", "").strip()
     password = data.get("password", "")
 
@@ -53,7 +53,7 @@ def login():
         return fail(401, "用户名或密码错误")
 
     # 4. 签发 JWT
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=str(user.id))
 
     return success({
         "token": token,

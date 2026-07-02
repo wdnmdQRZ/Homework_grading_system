@@ -4,6 +4,10 @@ from config import Config
 from extensions import db, jwt
 from routes.hello import hello_bp
 from routes.auth import auth_bp
+from routes.homework import homework_bp
+from routes.submission import submission_bp
+from routes.file import file_bp
+import models  # noqa: F401 - 确保所有模型被注册
 
 def create_app():
     """工厂函数创建 Flask 应用"""
@@ -24,6 +28,9 @@ def create_app():
     # 注册蓝图
     app.register_blueprint(hello_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(homework_bp)
+    app.register_blueprint(submission_bp)
+    app.register_blueprint(file_bp)
 
     @app.route("/")
     def index():
