@@ -31,11 +31,16 @@ E:\Homework_grading_system\
 │   │   └── response.py              # 统一 JSON 响应（success / fail）
 │   ├── models/
 │   │   ├── __init__.py
-│   │   └── user.py                  # 用户模型（User 表）
+│   │   ├── user.py                  # 用户模型（User 表）
+│   │   ├── homework.py              # 作业模型（Homework 表）
+│   │   └── submission.py            # 提交模型（Submission 表）
 │   ├── routes/
 │   │   ├── __init__.py
 │   │   ├── hello.py                 # 测试路由 /api/hello
-│   │   └── auth.py                  # 认证路由（注册 / 登录）
+│   │   ├── auth.py                  # 认证路由（注册 / 登录）
+│   │   ├── homework.py              # 作业 CRUD 路由
+│   │   ├── submission.py            # 提交 / 批改路由
+│   │   └── file.py                  # 文件下载路由
 │   ├── services/                    # 业务逻辑层（待建）
 │   ├── utils/                       # 工具函数（待建）
 │   ├── uploads/                     # 作业文件上传目录
@@ -161,6 +166,102 @@ Content-Type: application/json
 Authorization: Bearer <token>
 ```
 
+### 4. 作业列表
+
+```
+GET /api/homeworks
+Authorization: Bearer <token>
+```
+
+老师查看自己发布的作业，学生查看全部作业。
+
+### 5. 作业详情
+
+```
+GET /api/homeworks/<id>
+Authorization: Bearer <token>
+```
+
+### 6. 发布作业（教师）
+
+```
+POST /api/homeworks
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+    "title": "第一次作业",
+    "description": "写一篇作文",
+    "deadline": "2026-07-10T23:59:59"
+}
+```
+
+### 7. 编辑作业（教师）
+
+```
+PUT /api/homeworks/<id>
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{"title": "修改后的标题"}
+```
+
+### 8. 删除作业（教师）
+
+```
+DELETE /api/homeworks/<id>
+Authorization: Bearer <token>
+```
+
+会级联删除所有提交记录和磁盘文件。
+
+### 9. 提交作业（学生）
+
+```
+POST /api/submissions
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{"homework_id": 1, "content": "我的答案"}
+```
+
+也支持文件上传（multipart/form-data，字段名 `file`）。
+
+### 10. 提交列表
+
+```
+GET /api/submissions?homework_id=1
+Authorization: Bearer <token>
+```
+
+学生查看自己的提交，教师查看指定作业的所有提交。
+
+### 11. 提交详情
+
+```
+GET /api/submissions/<id>
+Authorization: Bearer <token>
+```
+
+学生只能看自己的，教师只能看自己作业的。
+
+### 12. 批改评分（教师）
+
+```
+PUT /api/submissions/<id>/grade
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{"score": 95, "comment": "写得很好"}
+```
+
+### 13. 文件下载
+
+```
+GET /api/uploads/<filepath>
+Authorization: Bearer <token>
+```
+
 ---
 
 ## 技术栈
@@ -186,7 +287,33 @@ Authorization: Bearer <token>
 | username | String(80) | 用户名，唯一，非空 |
 | password_hash | String(256) | 加密存储，不存明文 |
 | role | String(20) | 角色：`student` / `teacher` |
-| created_at | DateTime | 注册时间 |
+| created_at | DateTime | 注册时间（UTC） |
+
+### Homework（作业表）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | Integer (PK) | 主键，自增 |
+| title | String(200) | 作业标题，非空 |
+| description | Text | 作业描述 |
+| teacher_id | Integer (FK) | 关联 users.id |
+| deadline | DateTime | 截止时间（可选） |
+| created_at | DateTime | 发布时间（UTC） |
+
+### Submission（提交表）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| id | Integer (PK) | 主键，自增 |
+| homework_id | Integer (FK) | 关联 homeworks.id |
+| student_id | Integer (FK) | 关联 users.id |
+| file_path | String(500) | 上传文件路径（可选） |
+| file_name | String(200) | 原始文件名（可选） |
+| content | Text | 文本内容（可选） |
+| score | Integer | 分数 0-100（教师批改后填入） |
+| comment | Text | 教师评语 |
+| submitted_at | DateTime | 提交时间（UTC） |
+| graded_at | DateTime | 批改时间（UTC） |
 
 ---
 
@@ -198,9 +325,10 @@ Authorization: Bearer <token>
 - [x] 用户模型（User）
 - [x] 注册 / 登录接口
 - [x] QT ApiClient 封装（HTTP 请求）
-- [x] 登录界面（LoginDialog）
-- [ ] 作业 CRUD 接口 + 模型
-- [ ] 提交作业功能
-- [ ] 批改评分功能
+- [x] 登录/注册界面（QStackedWidget 分离页面）
+- [x] 作业 CRUD 接口 + 模型
+- [x] 提交作业功能（文本 + 文件上传）
+- [x] 批改评分功能
+- [ ] 学生面板（作业列表、提交、查看成绩）
+- [ ] 教师面板（发布作业、查看提交、批改）
 - [ ] 成绩查看功能
-- [ ] 文件上传 / 下载
