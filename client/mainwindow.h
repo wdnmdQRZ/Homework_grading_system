@@ -3,9 +3,10 @@
 
 #include <QMainWindow>
 
-class QStackedWidget;   // 前置声明
-class studentpanel;     // 前置声明
-class teacherpanel;     // 前置声明
+class QStackedWidget;
+class studentpanel;
+class teacherpanel;
+class ApiClient;
 
 namespace Ui {
 class MainWindow;
@@ -19,14 +20,16 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    // 登录成功后调用：传入 role 决定显示哪个面板
+    void setApiClient(ApiClient *api);
     void setRole(const QString &role);
+    void setUsername(const QString &username);
 
 private:
     Ui::MainWindow *ui;
     QStackedWidget *m_stackedWidget;
     studentpanel *m_studentPanel;
     teacherpanel *m_teacherPanel;
+    ApiClient *m_apiClient;
 };
 
 #endif // MAINWINDOW_H

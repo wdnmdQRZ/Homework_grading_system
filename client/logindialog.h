@@ -20,6 +20,7 @@ public:
     explicit logindialog(QWidget *parent = nullptr);
     ~logindialog();
 
+    void setApiClient(ApiClient *api);
     QString token() const;
     QString username() const;
     QString role() const;

@@ -1,119 +1,854 @@
-/* ==================== 登录/注册页面通用样式 ==================== */
+/* ============================================
+   作业管理系统 - 样式表（零全局规则）
+   ============================================ */
 
-/* 标题：大字加粗 */
-loginpage QLabel#labelTitle,
-registerpage QLabel#labelTitle {
-    font-size: 28px;
+/* ============================================
+   登录对话框
+   ============================================ */
+logindialog {
+    background: #fff;
+}
+
+logindialog QLineEdit {
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    selection-background-color: #409eff;
+    font-size: 13px;
+    min-height: 20px;
+}
+
+logindialog QLineEdit:focus {
+    border-color: #409eff;
+}
+
+logindialog QLabel#labelTitle {
+    font-size: 22px;
     font-weight: bold;
-    color: #1E293B;
-    qproperty-alignment: AlignCenter;
-    padding-top: 30px;
+    color: #1a1a2e;
+    padding-bottom: 4px;
 }
 
-/* 副标题：灰色 */
-loginpage QLabel#labelPrompt,
-registerpage QLabel#labelPrompt {
+logindialog QLabel#labelPrompt {
+    font-size: 13px;
+    color: #909399;
+    padding-bottom: 12px;
+}
+
+logindialog QLabel#labelUsername,
+logindialog QLabel#labelPassword {
+    font-size: 13px;
+    font-weight: 600;
+    color: #303133;
+    padding-top: 8px;
+}
+
+logindialog QLabel#labelWarning {
+    color: #f56c6c;
+    font-size: 12px;
+}
+
+logindialog QPushButton#btnLogin {
+    background-color: #409eff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 0;
     font-size: 14px;
-    color: #94A3B8;
-    qproperty-alignment: AlignCenter;
-    padding-top: 4px;
-    padding-bottom: 30px;
+    font-weight: 600;
+    min-height: 20px;
 }
 
-/* "用户名"/"密码" 标签 */
-loginpage QLabel#labelUsername,
-loginpage QLabel#labelPassword,
+logindialog QPushButton#btnLogin:hover {
+    background-color: #66b1ff;
+}
+
+logindialog QPushButton#btnLogin:pressed {
+    background-color: #3a8ee6;
+}
+
+logindialog QPushButton#btnToRegister {
+    background: transparent;
+    color: #409eff;
+    border: none;
+    font-size: 12px;
+}
+
+logindialog QPushButton#btnToRegister:hover {
+    color: #66b1ff;
+}
+
+/* ============================================
+   注册对话框
+   ============================================ */
+registerpage {
+    background: #fff;
+}
+
+registerpage QLineEdit {
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    selection-background-color: #409eff;
+    font-size: 13px;
+    min-height: 20px;
+}
+
+registerpage QLineEdit:focus {
+    border-color: #409eff;
+}
+
+registerpage QLabel#labelTitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a1a2e;
+    padding-bottom: 4px;
+}
+
+registerpage QLabel#labelPrompt {
+    font-size: 13px;
+    color: #909399;
+    padding-bottom: 12px;
+}
+
 registerpage QLabel#labelUsername,
 registerpage QLabel#labelPassword,
 registerpage QLabel#labelConfirmPassword {
-    font-size: 14px;
-    color: #334155;
-    font-weight: bold;
-    padding-left: 2px;
-    padding-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #303133;
+    padding-top: 8px;
 }
 
-/* 输入框 */
-loginpage QLineEdit,
-registerpage QLineEdit {
-    padding: 10px 14px;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: #FFFFFF;
-    color: #1E293B;
-}
-
-loginpage QLineEdit:focus,
-registerpage QLineEdit:focus {
-    border-color: #3B82F6;
-}
-
-loginpage QLineEdit::placeholder,
-registerpage QLineEdit::placeholder {
-    color: #B0BEC5;
-}
-
-/* 错误提示：红色居中文字 */
-loginpage QLabel#labelWarning,
 registerpage QLabel#labelWarning {
-    font-size: 14px;
-    color: #EF4444;
-    qproperty-alignment: AlignCenter;
+    color: #f56c6c;
+    font-size: 12px;
 }
 
-/* 登录按钮：蓝色实心 */
-loginpage QPushButton#btnLogin {
-    background-color: #3B82F6;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-loginpage QPushButton#btnLogin:hover {
-    background-color: #2563EB;
-}
-
-loginpage QPushButton#btnLogin:pressed {
-    background-color: #1D4ED8;
-}
-
-/* 注册按钮：蓝色实心 */
 registerpage QPushButton#btnRegister {
-    background-color: #3B82F6;
-    color: #FFFFFF;
+    background-color: #409eff;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 20px;
+    border-radius: 6px;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
 }
 
 registerpage QPushButton#btnRegister:hover {
-    background-color: #2563EB;
+    background-color: #66b1ff;
 }
 
 registerpage QPushButton#btnRegister:pressed {
-    background-color: #1D4ED8;
+    background-color: #3a8ee6;
 }
 
-/* 切换页面链接按钮 */
-loginpage QPushButton#btnToRegister,
 registerpage QPushButton#btnToLogin {
-    background-color: transparent;
-    color: #3B82F6;
+    background: transparent;
+    color: #409eff;
     border: none;
-    font-size: 14px;
-    padding: 8px;
+    font-size: 12px;
 }
 
-loginpage QPushButton#btnToRegister:hover,
 registerpage QPushButton#btnToLogin:hover {
-    color: #2563EB;
-    text-decoration: underline;
+    color: #66b1ff;
+}
+
+/* ============================================
+   学生面板
+   ============================================ */
+studentpanel {
+    background-color: #f5f6fa;
+}
+
+/* --- 顶部栏 --- */
+studentpanel QFrame#topbar {
+    background-color: #1a1a2e;
+    border: none;
+}
+
+studentpanel QLabel#topbarTitle {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+studentpanel QLabel#topbarUsername {
+    color: #ccc;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+studentpanel QLabel#topbarRoleStudent {
+    background-color: #67c23a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+}
+
+studentpanel QPushButton#topbarLogoutBtn {
+    background: transparent;
+    color: #bbb;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-size: 12px;
+}
+
+studentpanel QPushButton#topbarLogoutBtn:hover {
+    color: #fff;
+    border-color: #f56c6c;
+    background: rgba(245, 108, 108, 0.15);
+}
+
+/* --- 侧边栏 --- */
+studentpanel QFrame#sidebar {
+    background-color: #fff;
+    border-right: 1px solid #e8e8e8;
+}
+
+studentpanel QPushButton#sidebarBtn {
+    background: transparent;
+    color: #606266;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 13px;
+}
+
+studentpanel QPushButton#sidebarBtn:hover {
+    background-color: #f0f2f5;
+    color: #409eff;
+}
+
+studentpanel QPushButton#sidebarBtn:checked {
+    background-color: #ecf5ff;
+    color: #409eff;
+    font-weight: 600;
+    border-left: 3px solid #409eff;
+}
+
+/* --- 页面标题 --- */
+studentpanel QLabel#pageHeader {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1a1a2e;
+    padding: 20px 24px 12px 24px;
+}
+
+studentpanel QLabel#sectionTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+}
+
+/* --- 作业列表卡片 --- */
+studentpanel QFrame#homeworkCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+}
+
+studentpanel QFrame#homeworkCard:hover {
+    border-color: #409eff;
+}
+
+studentpanel QLabel#homeworkCardTitle {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+studentpanel QLabel#homeworkCardDesc {
+    font-size: 13px;
+    color: #606266;
+    padding: 4px 0;
+}
+
+studentpanel QLabel#homeworkCardMeta {
+    font-size: 12px;
+    color: #909399;
+}
+
+studentpanel QPushButton#detailBtn {
+    background: transparent;
+    color: #409eff;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+}
+
+studentpanel QPushButton#detailBtn:hover {
+    color: #66b1ff;
+}
+
+/* --- 状态标签 --- */
+studentpanel QLabel#tagSubmitted {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #91d5ff;
+}
+
+studentpanel QLabel#tagGraded {
+    background-color: #f6ffed;
+    color: #52c41a;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #b7eb8f;
+}
+
+studentpanel QLabel#tagUnsubmitted {
+    background-color: #fff7e6;
+    color: #fa8c16;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #ffd591;
+}
+
+/* --- 详情页 --- */
+studentpanel QFrame#homeworkInfoCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+}
+
+studentpanel QLabel#homeworkDetailTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+studentpanel QLabel#homeworkDetailDesc {
+    font-size: 13px;
+    color: #606266;
+}
+
+studentpanel QLabel#infoLabel {
+    font-size: 13px;
+    color: #909399;
+}
+
+studentpanel QLabel#scoreLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: #909399;
+}
+
+studentpanel QLabel#scoreLabelGraded {
+    font-size: 16px;
+    font-weight: bold;
+    color: #52c41a;
+}
+
+studentpanel QLabel#scoreLabelPending {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fa8c16;
+}
+
+/* --- 空状态 --- */
+studentpanel QLabel#emptyStateText {
+    font-size: 14px;
+    color: #c0c4cc;
+    padding: 40px 0;
+}
+
+/* --- 按钮 --- */
+studentpanel QPushButton#backBtn {
+    background: transparent;
+    color: #409eff;
+    border: none;
+    font-size: 13px;
+    padding: 4px 0;
+}
+
+studentpanel QPushButton#backBtn:hover {
+    color: #66b1ff;
+}
+
+studentpanel QPushButton#uploadBtn {
+    background: #fff;
+    color: #606266;
+    border: 2px dashed #dcdfe6;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 13px;
+}
+
+studentpanel QPushButton#uploadBtn:hover {
+    border-color: #409eff;
+    color: #409eff;
+    background: #ecf5ff;
+}
+
+studentpanel QLabel#uploadNote {
+    font-size: 12px;
+    color: #c0c4cc;
+}
+
+studentpanel QPushButton#primaryBtn {
+    background-color: #409eff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+studentpanel QPushButton#primaryBtn:hover {
+    background-color: #66b1ff;
+}
+
+studentpanel QPushButton#primaryBtn:pressed {
+    background-color: #3a8ee6;
+}
+
+studentpanel QTextEdit#contentEdit {
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    background: #fff;
+    selection-background-color: #409eff;
+}
+
+studentpanel QTextEdit#contentEdit:focus {
+    border-color: #409eff;
+}
+
+/* --- 提交表格区域 --- */
+studentpanel QFrame#homeworkScroll {
+    background: transparent;
+}
+
+studentpanel QTableWidget#submissionsTable {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    gridline-color: #f0f0f0;
+    selection-background-color: #ecf5ff;
+    selection-color: #303133;
+    font-size: 13px;
+}
+
+studentpanel QTableWidget#submissionsTable::item {
+    padding: 8px 12px;
+}
+
+studentpanel QHeaderView::section {
+    background-color: #fafafa;
+    color: #909399;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 8px 12px;
+}
+
+studentpanel QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+/* --- Toast --- */
+studentpanel QLabel#toast {
+    background: #303133;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 10px 20px;
+}
+
+/* ============================================
+   教师面板
+   ============================================ */
+teacherpanel {
+    background-color: #f5f6fa;
+}
+
+/* --- 顶部栏 --- */
+teacherpanel QFrame#topbar {
+    background-color: #1a1a2e;
+    border: none;
+}
+
+teacherpanel QLabel#topbarTitle {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+teacherpanel QLabel#topbarUsername {
+    color: #ccc;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+teacherpanel QLabel#topbarRoleTeacher {
+    background-color: #e6a23c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+}
+
+teacherpanel QPushButton#topbarLogoutBtn {
+    background: transparent;
+    color: #bbb;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-size: 12px;
+}
+
+teacherpanel QPushButton#topbarLogoutBtn:hover {
+    color: #fff;
+    border-color: #f56c6c;
+    background: rgba(245, 108, 108, 0.15);
+}
+
+/* --- 侧边栏 --- */
+teacherpanel QFrame#sidebar {
+    background-color: #fff;
+    border-right: 1px solid #e8e8e8;
+}
+
+teacherpanel QPushButton#sidebarBtn {
+    background: transparent;
+    color: #606266;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 13px;
+}
+
+teacherpanel QPushButton#sidebarBtn:hover {
+    background-color: #f0f2f5;
+    color: #409eff;
+}
+
+teacherpanel QPushButton#sidebarBtn:checked {
+    background-color: #ecf5ff;
+    color: #409eff;
+    font-weight: 600;
+    border-left: 3px solid #409eff;
+}
+
+/* --- 页面标题 --- */
+teacherpanel QLabel#pageHeader {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1a1a2e;
+    padding: 20px 24px 12px 24px;
+}
+
+teacherpanel QLabel#sectionTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+}
+
+teacherpanel QLabel#fieldLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #303133;
+    padding-top: 4px;
+}
+
+/* --- 按钮 --- */
+teacherpanel QPushButton#primaryBtn {
+    background-color: #409eff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+teacherpanel QPushButton#primaryBtn:hover {
+    background-color: #66b1ff;
+}
+
+teacherpanel QPushButton#primaryBtn:pressed {
+    background-color: #3a8ee6;
+}
+
+teacherpanel QPushButton#opsBtn {
+    background: #fff;
+    color: #606266;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+teacherpanel QPushButton#opsBtn:hover {
+    color: #409eff;
+    border-color: #c6e2ff;
+}
+
+/* --- 作业管理表格 --- */
+teacherpanel QTableWidget#hwManageTable {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    gridline-color: #f0f0f0;
+    selection-background-color: #ecf5ff;
+    selection-color: #303133;
+    font-size: 13px;
+}
+
+teacherpanel QTableWidget#hwManageTable::item {
+    padding: 8px 12px;
+}
+
+/* --- 空状态 --- */
+teacherpanel QLabel#emptyStateText {
+    font-size: 14px;
+    color: #c0c4cc;
+    padding: 40px 0;
+}
+
+/* --- 批改页左侧面板 --- */
+teacherpanel QFrame#gradingLeftPanel {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+}
+
+teacherpanel QFrame#studentItem {
+    background: #fff;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    margin: 2px 4px;
+}
+
+teacherpanel QFrame#studentItem:hover {
+    background: #f5f7fa;
+}
+
+teacherpanel QFrame#studentItem[active="true"] {
+    background: #ecf5ff;
+    border-color: #409eff;
+}
+
+teacherpanel QLabel#studentName {
+    font-size: 13px;
+    color: #303133;
+}
+
+teacherpanel QLabel#tagGraded {
+    background-color: #f6ffed;
+    color: #52c41a;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #b7eb8f;
+}
+
+teacherpanel QLabel#tagPending {
+    background-color: #fff7e6;
+    color: #fa8c16;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    border: 1px solid #ffd591;
+}
+
+/* --- 批改页右侧详情 --- */
+teacherpanel QFrame#homeworkInfoCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+}
+
+teacherpanel QLabel#homeworkDetailTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+teacherpanel QLabel#infoLabel {
+    font-size: 13px;
+    color: #909399;
+}
+
+teacherpanel QLabel#codeBlock {
+    background: #f8f9fa;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 12px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 12px;
+    color: #333;
+}
+
+teacherpanel QPushButton#downloadFileBtn {
+    background: #f0f9ff;
+    color: #409eff;
+    border: 1px solid #b3d8ff;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+teacherpanel QPushButton#downloadFileBtn:hover {
+    background: #ecf5ff;
+    border-color: #409eff;
+}
+
+teacherpanel QPushButton#downloadFileBtn:disabled {
+    background: #f5f7fa;
+    color: #c0c4cc;
+    border-color: #e4e7ed;
+}
+
+/* --- 评分区域 --- */
+teacherpanel QSpinBox#scoreSpinBox {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 6px 12px;
+    min-width: 120px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background: #fff;
+}
+
+teacherpanel QSpinBox#scoreSpinBox:focus {
+    border-color: #409eff;
+}
+
+teacherpanel QPlainTextEdit#commentEdit {
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+teacherpanel QPlainTextEdit#commentEdit:focus {
+    border-color: #409eff;
+}
+
+teacherpanel QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+/* --- Toast --- */
+teacherpanel QLabel#toast {
+    background: #303133;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 10px 20px;
+}
+
+/* ============================================
+   发布作业弹窗
+   ============================================ */
+QDialog#publishDialog {
+    background: #fff;
+    border-radius: 4px;
+}
+
+QDialog#publishDialog QLabel#dialogTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a1a2e;
+    padding-bottom: 4px;
+}
+
+QDialog#publishDialog QLabel#fieldLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #303133;
+    padding-top: 4px;
+}
+
+QDialog#publishDialog QLineEdit#dialogInput {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background: #fff;
+    selection-background-color: #409eff;
+}
+
+QDialog#publishDialog QLineEdit#dialogInput:focus {
+    border-color: #409eff;
+}
+
+QDialog#publishDialog QPlainTextEdit#dialogTextEdit {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background: #fff;
+    selection-background-color: #409eff;
+}
+
+QDialog#publishDialog QPlainTextEdit#dialogTextEdit:focus {
+    border-color: #409eff;
+}
+
+QDialog#publishDialog QPushButton#cancelBtn {
+    background-color: #fff;
+    color: #606266;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+}
+
+QDialog#publishDialog QPushButton#cancelBtn:hover {
+    color: #409eff;
+    border-color: #c6e2ff;
+    background: #ecf5ff;
+}
+
+QDialog#publishDialog QPushButton#primaryBtn {
+    background-color: #409eff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+QDialog#publishDialog QPushButton#primaryBtn:hover {
+    background-color: #66b1ff;
+}
+
+QDialog#publishDialog QPushButton#primaryBtn:pressed {
+    background-color: #3a8ee6;
+}
+
+/* ============================================
+   批改作业弹窗
+   ============================================ */
+QDialog#gradingDialog {
+    background: #fff;
 }

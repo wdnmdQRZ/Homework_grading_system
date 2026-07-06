@@ -2,40 +2,66 @@
 #define APICLIENT_H
 
 #include <QObject>
-#include <QNetworkAccessManager>  // 负责发送 HTTP 请求的核心类
-#include <QNetworkReply>          // 服务器回复数据的封装类
-#include <QJsonObject>            // JSON 对象，用于传递解析后的数据
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QHash>
+#include <functional>
+#include <QTemporaryFile>
 
 class ApiClient : public QObject
 {
     Q_OBJECT
 public:
+    using Callback = std::function<void(bool ok, const QJsonDocument &data, const QString &msg)>;
+
     explicit ApiClient(QObject *parent = nullptr);
 
-    // 登录：向 POST /api/auth/login 发送 username + password
-    void login(const QString &username, const QString &password);
+    void setToken(const QString &token) { m_token = token; }
+    QString token() const { return m_token; }
 
-    // 注册：向 POST /api/auth/register 发送 username + password
+    // ===== 认证 =====
+    void login(const QString &username, const QString &password);
     void registerUser(const QString &username, const QString &password);
 
-signals:
-    // 登录结果信号
-    void loginResult(bool ok, const QJsonObject &data, const QString &message);
+    // ===== 作业 =====
+    void getHomeworks(const Callback &cb);
+    void getHomework(int hid, const Callback &cb);
+    void createHomework(const QJsonObject &data, const Callback &cb);
+    void updateHomework(int hid, const QJsonObject &data, const Callback &cb);
+    void deleteHomework(int hid, const Callback &cb);
 
-    // 注册结果信号
+    // ===== 提交 =====
+    void getSubmissions(int homeworkId, const Callback &cb);
+    void getSubmission(int sid, const Callback &cb);
+    void submitHomework(int hid, const QString &filePath, const QString &content, const Callback &cb);
+    void gradeSubmission(int sid, int score, const QString &comment, const Callback &cb);
+
+    // ===== 文件下载 =====
+    void downloadFile(const QString &serverPath, const QString &localSavePath);
+
+signals:
+    void loginResult(bool ok, const QJsonObject &data, const QString &message);
     void registerResult(bool ok, const QString &message);
+    void fileDownloaded(const QString &localPath, bool ok, const QString &errorMsg);
 
 private slots:
-    // QNetworkAccessManager::finished 信号触发，统一处理所有网络回复
     void onReplyFinished(QNetworkReply *reply);
 
 private:
     QNetworkAccessManager *m_manager;
+    QHash<QNetworkReply*, Callback> m_callbacks;
+    QString m_token;
     static const QString BASE_URL;
 
-    // 追踪当前请求类型
     enum RequestType { None, Login, Register };
     RequestType m_pendingRequest = None;
+
+    QNetworkReply* requestGet(const QString &path, const Callback &cb);
+    QNetworkReply* requestPost(const QString &path, const QJsonDocument &doc, const Callback &cb);
+    QNetworkReply* requestPut(const QString &path, const QJsonDocument &doc, const Callback &cb);
+    QNetworkReply* requestDelete(const QString &path, const Callback &cb);
 };
 
 #endif // APICLIENT_H

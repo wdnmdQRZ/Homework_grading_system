@@ -1,8 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 from extensions import db
 from models.user import User
-from common.response import success, fail
+from common.response import success
 
 auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/api/auth/register", methods=["POST"])
@@ -41,16 +41,16 @@ def login():
 
     # 1. 参数校验
     if not username or not password:
-        return fail(400, "用户名和密码不能为空")
+        return jsonify({"code": 400, "message": "用户名和密码不能为空", "data": None})
 
     # 2. 查用户
     user = User.query.filter_by(username=username).first()
     if not user:
-        return fail(401, "用户名或密码错误")
+        return jsonify({"code": 400, "message": "用户名或密码错误", "data": None})
 
     # 3. 验密码
     if not user.check_password(password):
-        return fail(401, "用户名或密码错误")
+        return jsonify({"code": 400, "message": "用户名或密码错误", "data": None})
 
     # 4. 签发 JWT
     token = create_access_token(identity=str(user.id))

@@ -9,7 +9,7 @@
 logindialog::logindialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::logindialog)
-    , m_apiClient(new ApiClient(this))
+    , m_apiClient(nullptr)
     , m_loginPage(new loginpage)
     , m_registerPage(new registerpage)
 {
@@ -31,6 +31,20 @@ logindialog::logindialog(QWidget *parent)
         ui->stackedWidget->setCurrentIndex(0);
         m_loginPage->clearFields();
     });
+}
+
+logindialog::~logindialog()
+{
+    delete ui;
+}
+
+QString logindialog::token() const    { return m_token; }
+QString logindialog::username() const { return m_username; }
+QString logindialog::role() const     { return m_role; }
+
+void logindialog::setApiClient(ApiClient *api)
+{
+    m_apiClient = api;
 
     // === 登录请求 ===
     connect(m_loginPage, &loginpage::loginRequested,
@@ -40,6 +54,7 @@ logindialog::logindialog(QWidget *parent)
             this, [this](bool ok, const QJsonObject &data, const QString &message) {
         if (ok) {
             m_token = data["token"].toString();
+            m_apiClient->setToken(m_token);
             QJsonObject user = data["user"].toObject();
             m_username = user["username"].toString();
             m_role = user["role"].toString();
@@ -56,7 +71,6 @@ logindialog::logindialog(QWidget *parent)
     connect(m_apiClient, &ApiClient::registerResult,
             this, [this](bool ok, const QString &message) {
         if (ok) {
-            // 注册成功：切回登录页，自动填入用户名
             ui->stackedWidget->setCurrentIndex(0);
             m_loginPage->clearFields();
             m_loginPage->setUsername(m_registerPage->username());
@@ -66,15 +80,6 @@ logindialog::logindialog(QWidget *parent)
         }
     });
 }
-
-logindialog::~logindialog()
-{
-    delete ui;
-}
-
-QString logindialog::token() const    { return m_token; }
-QString logindialog::username() const { return m_username; }
-QString logindialog::role() const     { return m_role; }
 
 void logindialog::onLoginRequested(const QString &username, const QString &password)
 {
