@@ -18,7 +18,7 @@ E:\Homework_grading_system\
 │   ├── style.qss                    # QT 样式表
 │   └── src/
 │       └── core/
-│           ├── apiclient.h           # API 客户端封装（GET/POST 请求）
+│           ├── apiclient.h           # API 客户端封装（GET/POST/PUT/DELETE）
 │           └── apiclient.cpp         # API 客户端实现
 │
 ├── server/                          # Flask Python 后端
@@ -329,6 +329,5 @@ Authorization: Bearer <token>
 - [x] 作业 CRUD 接口 + 模型
 - [x] 提交作业功能（文本 + 文件上传）
 - [x] 批改评分功能
-- [ ] 学生面板（作业列表、提交、查看成绩）
-- [ ] 教师面板（发布作业、查看提交、批改）
-- [ ] 成绩查看功能
+- [x] 学生面板（作业列表、提交、查看成绩）
+- [x] 教师面板（发布作业、查看提交、批改）
