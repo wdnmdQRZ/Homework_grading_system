@@ -658,6 +658,7 @@ void studentpanel::populateMySubmissions()
 
 void studentpanel::switchPage(int index)
 {
+    if (index == 2) loadMySubmissions();
     m_stacked->setCurrentIndex(index);
     updateSidebarActive(index);
 }

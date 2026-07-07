@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 from extensions import db
 from models.user import User
-from common.response import success
+from common.response import success, fail
 
 auth_bp = Blueprint("auth", __name__)
 @auth_bp.route("/api/auth/register", methods=["POST"])
